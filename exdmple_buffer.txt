@@ -1,0 +1,42 @@
+#include "mlx.h"
+#include <stdlib.h>
+
+#define NUM_TEXTURES 4
+
+typedef struct s_data {
+    int *texture_buffer[NUM_TEXTURES];
+} t_data;
+
+void load_texture(void *mlx, t_data *data, const char *file_path, int texture_index) {
+    void *img;
+    int width, height;
+    int *img_data;
+    int bpp, line_len, endian;
+    int i;
+
+    // Charger l'image .xpm avec la MiniLibX
+    img = mlx_xpm_file_to_image(mlx, (char *)file_path, &width, &height);
+    if (!img) {
+        perror("Erreur lors du chargement de l'image XPM");
+        return;
+    }
+
+    // Obtenir l'adresse des pixels de l'image
+    img_data = (int *)mlx_get_data_addr(img, &bpp, &line_len, &endian);
+
+    // Allouer un buffer pour stocker la texture
+    data->texture_buffer[texture_index] = malloc(width * height * sizeof(int));
+    if (!data->texture_buffer[texture_index]) {
+        perror("Erreur d'allocation mémoire pour la texture");
+        mlx_destroy_image(mlx, img);
+        return;
+    }
+
+    // Copier les pixels de l'image dans le buffer
+    for (i = 0; i < width * height; i++) {
+        data->texture_buffer[texture_index][i] = img_data[i];
+    }
+
+    // Libérer l'image chargée par mlx_xpm_file_to_image
+    mlx_destroy_image(mlx, img);
+}
