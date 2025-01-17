@@ -5,7 +5,7 @@ CC = gcc
 NAME = cub3d
 
 # Directories
-SRC_DIR = kiki
+SRC_DIR = jose
 OBJ_DIR = obj
 MLX_DIR = mlx
 LIBFT_PATH = ./libft
@@ -13,11 +13,22 @@ LIBFT = -L$(LIBFT_PATH) -lft
 
 # Sources
 SRC = 	$(SRC_DIR)/main.c \
-		$(SRC_DIR)/player.c \
-		$(SRC_DIR)/texture.c
+		$(SRC_DIR)/error.c \
+		$(SRC_DIR)/extract_rgb.c \
+		$(SRC_DIR)/parsing.c \
+		$(SRC_DIR)/utils.c
 OBJ =	$(OBJ_DIR)/main.o \
-		$(OBJ_DIR)/player.o \
-		$(OBJ_DIR)/texture.o
+		$(OBJ_DIR)/error.o \
+		$(OBJ_DIR)/extract_rgb.o \
+		$(OBJ_DIR)/parsing.o \
+		$(OBJ_DIR)/utils.o
+
+# SRC = 	$(SRC_DIR)/main.c \
+# 		$(SRC_DIR)/player.c \
+# 		$(SRC_DIR)/texture.c
+# OBJ =	$(OBJ_DIR)/main.o \
+# 		$(OBJ_DIR)/player.o \
+# 		$(OBJ_DIR)/texture.o
 
 # Compiler flags
 CFLAGS = -Wall -Wextra -Werror -I$(MLX_DIR)
@@ -29,7 +40,7 @@ LDFLAGS = -L$(MLX_DIR) -lmlx -lX11 -lXext -lm
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_PATH)/libft.a
-	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
+	$(CC) $(OBJ) $(LDFLAGS) $(LIBFT) -o $(NAME)
 
 # Object files compilation
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 03:43:08 by jose-lfe          #+#    #+#             */
-/*   Updated: 2025/01/15 15:14:17 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2025/01/17 12:15:50 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_print_error(char *str)
 {
+	ft_printf("Error\n");
 	ft_printf("%s\n", str);
 	exit (0);
 }

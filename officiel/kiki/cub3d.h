@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
-# include "libft.h"
-# include "get_next_line_bonus.h"
-# include "ft_printf.h"
+# include "../libft/libft.h"
+# include "../libft/get_next_line_bonus.h"
+# include "../libft/ft_printf.h"
 
 # define DEBUG 1
 # define WIDTH 1280
 # define HEIGHT 720
-# define BLOCK 64
+# define BLOCK 256
 # define EVENT_CLOSE_BTN 17
 # define KEY_UP 65362
 # define KEY_DOWN 65364
@@ -82,25 +82,26 @@ typedef struct s_data
 	int		map_y;
 	int		map_s;
 	int		*map;
-	void	*mlx;
-	void	*win;
-	void	*NO_p;
-	void	*SO_p;
-	void	*WE_p;
-	void	*EA_p;
-	int		*NO_i;
-	int		*SO_i;
-	int		*WE_i;
-	int		*EA_i;
-	int		F;
-	int		C;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	int		f_rgb; // int color = (255 << 16) | (127 << 8) | 64;
+	int		c_rgb;
 }	t_data;
+
+//jojo/extract_rgb
+void	ft_extract_rgb(char *id, char *info, t_data *data);
 
 //jojo/parsing.c
 int		get_texture(char **str, t_data *data);
 
 //jojo/error.c
 void	ft_print_error(char *str);
+void	ft_free_str_map(char **map);
+bool	ft_check_empty(char *str);
+int		ft_compare(char *str, char *check);
+char	*ft_get_id(char *str, int *i);
 
 //jojo/utils.c
 t_data	init_data(void);
