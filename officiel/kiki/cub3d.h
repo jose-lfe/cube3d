@@ -81,7 +81,8 @@ typedef struct s_data
 	int		map_x;
 	int		map_y;
 	int		map_s;
-	int		*map;
+	char	**map;
+	int		*map_int;
 	char	*no;
 	char	*so;
 	char	*we;
@@ -107,6 +108,12 @@ char	*ft_get_id(char *str, int *i);
 t_data	init_data(void);
 void	ft_free_str_map(char **map);
 
+//jojo/utils2.c
+float	find_player_x(char **map);
+float	find_player_y(char **map);
+
+//jojo/checks.c
+void	check_bad_char(t_data *data);
 
 void	init_player(t_player *player);
 int		key_press(int key, t_player *player);

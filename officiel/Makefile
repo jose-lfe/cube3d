@@ -16,12 +16,16 @@ SRC = 	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/error.c \
 		$(SRC_DIR)/extract_rgb.c \
 		$(SRC_DIR)/parsing.c \
-		$(SRC_DIR)/utils.c
+		$(SRC_DIR)/utils.c \
+		$(SRC_DIR)/utils2.c \
+		$(SRC_DIR)/checks.c
 OBJ =	$(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/error.o \
 		$(OBJ_DIR)/extract_rgb.o \
 		$(OBJ_DIR)/parsing.o \
-		$(OBJ_DIR)/utils.o
+		$(OBJ_DIR)/utils.o \
+		$(OBJ_DIR)/utils2.o \
+		$(OBJ_DIR)/checks.o
 
 # SRC = 	$(SRC_DIR)/main.c \
 # 		$(SRC_DIR)/player.c \

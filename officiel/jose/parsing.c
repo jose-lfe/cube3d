@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:41:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2025/01/17 16:47:11 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:50:50 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 int	ft_start_map(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	while (str[i])
 	{
-		if (str[i] != '0' && str[i] != '1' && str[i] != ' ')
+		if (str[i] != '0' && str[i] != '1' && str[i] != ' ' && str[i] != 'E'
+			&& str[i] != 'N' && str[i] != 'S' && str[i] != 'W')
 			return (0);
 		i++;
 	}
@@ -30,13 +31,13 @@ int	ft_start_map(char *str)
 
 char	*ft_get_info(char *str, int i)
 {
-	int 	y;
+	int		y;
 	char	*info;
-	
+
 	while (str[i] && str[i] == ' ')
 		i++;
 	if (str[i] == '\0')
-	return (NULL);
+		return (NULL);
 	y = 0;
 	while (str[i + y] && str[i + y] != ' ')
 		y++;
@@ -49,7 +50,7 @@ char	*ft_get_info(char *str, int i)
 	info[y] = '\0';
 	while (str[i] == ' ')
 		i++;
-	if (str != '\0')
+	if (str[i] != '\0')
 	{
 		printf("error\n format not respected\n");
 		//ici faire quelque chose
@@ -94,7 +95,7 @@ bool	ft_get_texture2(char *str, t_data *data)
 		ft_put_info(id, info, data);
 	else if (ft_compare(id, "C") == 1 || ft_compare(id, "F") == 1)
 		ft_extract_rgb(id, info, data);
-	else 
+	else
 	{
 		printf("Error\n");
 		printf("%s: is not a correct identifier", id);
@@ -132,4 +133,3 @@ int	get_texture(char **str, t_data *data)
 	}
 	return (i);
 }
-

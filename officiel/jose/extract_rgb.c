@@ -31,7 +31,7 @@ void	ft_extract_rgb(char *id, char *info, t_data *data)
 	{
 		printf("Error\n");
 		printf("RGB values must be between 0 and 255.\n");
-		free(info);
+		free(original_info);
 		free(id);
 		exit(0); // changer par free all
 	}

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 03:48:10 by jose-lfe          #+#    #+#             */
-/*   Updated: 2025/01/17 16:03:55 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:22:44 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_data	init_data(void)
 	data.map_x = 0;
 	data.map_y = 0;
 	data.map_s = 0;
+	data.map_int = NULL;
 	data.map = NULL;
 	data.no = NULL;
 	data.so = NULL;
