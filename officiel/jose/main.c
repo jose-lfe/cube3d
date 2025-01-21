@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 22:15:49 by jose-lfe          #+#    #+#             */
-/*   Updated: 2025/01/20 16:01:26 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:17:19 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_fill_map_int(char c)
 	else if (c == '0')
 		return (0);
 	else if (c == ' ')
-		return (1);
+		return (6);
 	else if (c == 'N')
 		return (2);
 	else if (c == 'S')
@@ -50,6 +50,24 @@ int	ft_fill_map_int(char c)
 		return (-1);
 }
 
+char	*ft_fill_map_char2(int	check)
+{
+	if (check == 0)
+		return ('0');
+	if (check == 1)
+		return ('1');
+	if (check == 2)
+		return ('N');
+	if (check == 3)
+		return ('S');
+	if (check == 4)
+		return ('E');
+	if (check == 5)
+		return ('W');
+	else
+		return (' ');
+}
+
 int	ft_fill_map_char(t_data *data, int i, int x)
 {
 	int	j;
@@ -60,18 +78,7 @@ int	ft_fill_map_char(t_data *data, int i, int x)
 		return (-1);
 	while (j < data->map_x)
 	{
-		if (data->map_int[x] == 0)
-			data->map[i][j] = '0';
-		if (data->map_int[x] == 1)
-			data->map[i][j] = '1';
-		if (data->map_int[x] == 2)
-			data->map[i][j] = 'N';
-		if (data->map_int[x] == 3)
-			data->map[i][j] = 'S';
-		if (data->map_int[x] == 4)
-			data->map[i][j] = 'E';
-		if (data->map_int[x] == 5)
-			data->map[i][j] = 'W';
+		data->map[i][j] = ft_fill_map_char2(data->map_int[x]);
 		j++;
 		x++;
 	}

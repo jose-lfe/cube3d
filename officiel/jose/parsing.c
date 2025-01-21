@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:41:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2025/01/20 13:50:50 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:28:35 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,15 @@ int	get_texture(char **str, t_data *data)
 		}
 		i++;
 	}
-	if (flag != 6)
+	if (flag < 6)
 	{
 		ft_free_str_map(str);
-		exit(0);
-		//free_and_exit(data);
+		ft_free_all("Not enought elements about the map\n", data);
+	}
+		if (flag < 6)
+	{
+		ft_free_str_map(str);
+		ft_free_all("Not enought elements about the map\n", data);
 	}
 	return (i);
 }

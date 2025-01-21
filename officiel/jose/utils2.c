@@ -1,6 +1,5 @@
 #include "../kiki/cub3d.h"
 
-
 float	find_player_x(char **map)
 {
 	int	x;

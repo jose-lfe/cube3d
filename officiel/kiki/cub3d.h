@@ -99,20 +99,21 @@ int		get_texture(char **str, t_data *data);
 
 //jojo/error.c
 void	ft_print_error(char *str);
-void	ft_free_str_map(char **map);
-bool	ft_check_empty(char *str);
-int		ft_compare(char *str, char *check);
-char	*ft_get_id(char *str, int *i);
+void	ft_free_all(char *str, t_data *data);
 
 //jojo/utils.c
 t_data	init_data(void);
 void	ft_free_str_map(char **map);
+bool	ft_check_empty(char *str);
+int		ft_compare(char *str, char *check);
+char	*ft_get_id(char *str, int *i);
 
 //jojo/utils2.c
 float	find_player_x(char **map);
 float	find_player_y(char **map);
 
 //jojo/checks.c
+void	check_for_player(int *map, int size, t_data *data);
 void	check_bad_char(t_data *data);
 
 void	init_player(t_player *player);
