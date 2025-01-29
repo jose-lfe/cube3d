@@ -56,7 +56,7 @@ typedef struct s_texture
 
 typedef struct s_game
 {
-	void	*mlx;
+	void	*mlx; 
 	void	*win;
 	void	*img;
 
@@ -72,10 +72,6 @@ typedef struct s_game
 
 } t_game;
 
-typedef struct s_map
-{
-}	t_map;
-
 typedef struct s_data
 {
 	int		map_x;
@@ -87,12 +83,16 @@ typedef struct s_data
 	char	*so;
 	char	*we;
 	char	*ea;
-	int		f_rgb; // int color = (255 << 16) | (127 << 8) | 64;
+	char	*id;
+	int		f_rgb;
 	int		c_rgb;
+	float	player_x;
+	float	player_y;
+	float	player_angle;
 }	t_data;
 
 //jojo/extract_rgb
-void	ft_extract_rgb(char *id, char *info, t_data *data);
+void	ft_extract_rgb(char **map, char *id, char *info, t_data *data);
 
 //jojo/parsing.c
 int		get_texture(char **str, t_data *data);
@@ -100,17 +100,26 @@ int		get_texture(char **str, t_data *data);
 //jojo/error.c
 void	ft_print_error(char *str);
 void	ft_free_all(char *str, t_data *data);
+void	ft_error_get_info(char *str, char **map, t_data *data);
 
 //jojo/utils.c
 t_data	init_data(void);
 void	ft_free_str_map(char **map);
 bool	ft_check_empty(char *str);
 int		ft_compare(char *str, char *check);
-char	*ft_get_id(char *str, int *i);
+char	*ft_get_id(char **map, char *str, int *i, t_data *data);
+
+//jojo/converts.c
+void	convert_map_int_to_char(t_data *data);
+void	convert_map(char **str, int	i, t_data *data);
+void	convert_map2(char **str, int i, t_data *data);
 
 //jojo/utils2.c
-float	find_player_x(char **map);
-float	find_player_y(char **map);
+int		find_map_x(char **str, int i);
+void	ft_get_player_data(char c, int y, int x, t_data *data);
+int		ft_fill_map_int(char c);
+int		ft_fill_map_char(t_data *data, int i, int x);
+char	ft_fill_map_char2(int	check);
 
 //jojo/checks.c
 void	check_for_player(int *map, int size, t_data *data);

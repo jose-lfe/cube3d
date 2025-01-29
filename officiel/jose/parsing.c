@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:41:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2025/01/21 11:28:35 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:27:04 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_start_map(char *str)
 	return (1);
 }
 
-char	*ft_get_info(char *str, int i)
+char	*ft_get_info(char **map, char *str, int i, t_data *data)
 {
 	int		y;
 	char	*info;
@@ -43,7 +43,7 @@ char	*ft_get_info(char *str, int i)
 		y++;
 	info = malloc((y + 1) * sizeof(char));
 	if (!info)
-		ft_print_error("malloc error"); //
+		ft_error_get_info("Malloc error\n", map, data);
 	y = 0;
 	while (str[i] && str[i] != ' ')
 		info[y++] = str[i++];
@@ -51,15 +51,20 @@ char	*ft_get_info(char *str, int i)
 	while (str[i] == ' ')
 		i++;
 	if (str[i] != '\0')
-	{
-		printf("error\n format not respected\n");
-		//ici faire quelque chose
-	}
+		ft_error_get_info("Format not respected\n", map, data);
 	return (info);
 }
 
-void	ft_put_info(char *id, char *info, t_data *data)
+void	ft_put_info(char **map, char *id, char *info, t_data *data)
 {
+	if (info == NULL)
+	{
+		printf("Error\n");
+		printf("No path for texture :%s\n", id);
+		free(id);
+		ft_free_str_map(map);
+		ft_free_all(NULL, data);
+	}
 	if (ft_compare(id, "NO") == 1)
 		data->no = info;
 	if (ft_compare(id, "SO") == 1)
@@ -68,44 +73,35 @@ void	ft_put_info(char *id, char *info, t_data *data)
 		data->we = info;
 	if (ft_compare(id, "EA") == 1)
 		data->ea = info;
-	if (info == NULL)
-	{
-		printf("Error\n");
-		printf("No path for texture :%s\n", id);
-		free(id);
-		exit(0); // changer pour la fonction qui vas tout free
-	}
 	printf("%s : %s\n", id, info); //
 }
 
-bool	ft_get_texture2(char *str, t_data *data)
+void	ft_get_texture2(char **map, char *str, t_data *data)
 {
 	int		i;
-	char	*id;
 	char	*info;
-	
+
 	i = 0;
 	while (str[i] && str[i] == ' ')
 		i++;
-	id = ft_get_id(str, &i);
-	printf("id: %s\n", id); // effacer plus tard
-	info = ft_get_info(str, i);
-	if (ft_compare(id, "NO") == 1 || ft_compare(id, "SO") == 1
-		|| ft_compare(id, "WE") == 1 || ft_compare(id, "EA") == 1)
-		ft_put_info(id, info, data);
-	else if (ft_compare(id, "C") == 1 || ft_compare(id, "F") == 1)
-		ft_extract_rgb(id, info, data);
+	data->id = ft_get_id(map, str, &i, data);
+	printf("id: %s\n", data->id); // effacer plus tard
+	info = ft_get_info(map, str, i, data);
+	if (ft_compare(data->id, "NO") == 1 || ft_compare(data->id, "SO") == 1
+		|| ft_compare(data->id, "WE") == 1 || ft_compare(data->id, "EA") == 1)
+		ft_put_info(map, data->id, info, data);
+	else if (ft_compare(data->id, "C") == 1 || ft_compare(data->id, "F") == 1)
+		ft_extract_rgb(map, data->id, info, data);
 	else
 	{
-		printf("Error\n");
-		printf("%s: is not a correct identifier", id);
-		free(id);
 		if (info != NULL)
 			free(info);
-		exit (0); // changer par la fonction qui vas tout free
+		free(data->id);
+		ft_free_str_map(map);
+		printf("Error\n%s: is not a correct identifier", data->id);
+		ft_free_all(NULL, data);
 	}
-	free(id);
-	return (true);
+	free(data->id);
 }
 
 int	get_texture(char **str, t_data *data)
@@ -119,8 +115,7 @@ int	get_texture(char **str, t_data *data)
 	{
 		if (ft_check_empty(str[i]) == false)
 		{
-			if (ft_get_texture2(str[i], data) == false)
-				break ;
+			ft_get_texture2(str, str[i], data);
 			flag++;
 		}
 		i++;
@@ -130,10 +125,10 @@ int	get_texture(char **str, t_data *data)
 		ft_free_str_map(str);
 		ft_free_all("Not enought elements about the map\n", data);
 	}
-		if (flag < 6)
+	if (flag > 6)
 	{
 		ft_free_str_map(str);
-		ft_free_all("Not enought elements about the map\n", data);
+		ft_free_all("too many elements about the map\n", data);
 	}
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 03:43:08 by jose-lfe          #+#    #+#             */
-/*   Updated: 2025/01/21 11:23:59 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:27:10 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_print_error(char *str)
 {
 	ft_printf("Error\n");
 	ft_printf("%s\n", str);
-	exit (0);
+	exit(0);
 }
 
 void	ft_free_all(char *str, t_data *data)
@@ -33,6 +33,14 @@ void	ft_free_all(char *str, t_data *data)
 		free(data->we);
 	if (data->ea != NULL)
 		free(data->ea);
-	//suite
-	ft_print_error(str);
+	if (str != NULL)
+		ft_print_error(str);
+	exit(0);
+}
+
+void	ft_error_get_info(char *str, char **map, t_data *data)
+{
+	ft_free_str_map(map);
+	free(data->id);
+	ft_free_all(str, data);
 }

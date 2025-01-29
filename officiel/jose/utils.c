@@ -6,7 +6,7 @@
 /*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 03:48:10 by jose-lfe          #+#    #+#             */
-/*   Updated: 2025/01/20 14:22:44 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:22:51 by jose-lfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@ t_data	init_data(void)
 	data.so = NULL;
 	data.we = NULL;
 	data.ea = NULL;
+	data.id = NULL;
 	data.f_rgb = 0;
 	data.c_rgb = 0;
+	data.player_angle = 0;
+	data.player_x = 0;
+	data.player_y = 0;
 	return (data);
 }
 
@@ -67,7 +71,7 @@ int	ft_compare(char *str, char *check)
 	return (0);
 }
 
-char	*ft_get_id(char *str, int *i)
+char	*ft_get_id(char **map, char *str, int *i, t_data *data)
 {
 	int		y;
 	char	*id;
@@ -77,7 +81,10 @@ char	*ft_get_id(char *str, int *i)
 		y++;
 	id = malloc((y + 1) * sizeof(char));
 	if (!id)
-		ft_print_error("malloc error");
+	{
+		ft_free_str_map(map);
+		ft_free_all("malloc error\n", data);
+	}
 	y = 0;
 	while (str[*i] && str[*i] != ' ')
 	{
