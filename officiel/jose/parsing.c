@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kdroz <kdroz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:41:01 by jose-lfe          #+#    #+#             */
-/*   Updated: 2025/01/28 16:27:04 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2025/02/05 14:55:19 by kdroz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../kiki/cub3d.h"
+#include "cub3d.h"
 
 int	ft_start_map(char *str)
 {
@@ -73,7 +73,6 @@ void	ft_put_info(char **map, char *id, char *info, t_data *data)
 		data->we = info;
 	if (ft_compare(id, "EA") == 1)
 		data->ea = info;
-	printf("%s : %s\n", id, info); //
 }
 
 void	ft_get_texture2(char **map, char *str, t_data *data)
@@ -85,7 +84,6 @@ void	ft_get_texture2(char **map, char *str, t_data *data)
 	while (str[i] && str[i] == ' ')
 		i++;
 	data->id = ft_get_id(map, str, &i, data);
-	printf("id: %s\n", data->id); // effacer plus tard
 	info = ft_get_info(map, str, i, data);
 	if (ft_compare(data->id, "NO") == 1 || ft_compare(data->id, "SO") == 1
 		|| ft_compare(data->id, "WE") == 1 || ft_compare(data->id, "EA") == 1)

@@ -1,10 +1,10 @@
-NO test_files/img/valid.xpm
-EA test_files/img/e2.xpm
-SO test_files/img/s2.xpm
-WE test_files/img/w2.xpm
+NO ./textures/north_texture.xpm
+SO ./textures/south_texture.xpm
+WE ./textures/west_texture.xpm
+EA ./textures/east_texture.xpm
 
-C 67, 161, 232
-F 151, 101, 201
+C 67,161,232
+F 151,101,201
 
                                                         111111
                                                         11010111111111

@@ -1,4 +1,16 @@
-#include "../kiki/cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checks.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kdroz <kdroz@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/05 15:14:06 by kdroz             #+#    #+#             */
+/*   Updated: 2025/02/05 15:14:06 by kdroz            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
 
 void	check_for_player(int *map, int size, t_data *data)
 {
@@ -13,7 +25,6 @@ void	check_for_player(int *map, int size, t_data *data)
 			starting_point ++;
 		i++;
 	}
-	printf("nbr = %d\n", starting_point);
 	if (starting_point < 1)
 		ft_free_all("No player inside the map\n", data);
 	if (starting_point > 1)
@@ -29,9 +40,7 @@ void	check_bad_char(t_data *data)
 	{
 		if (data->map_int[i] < 0)
 		{
-			printf("Error\nInvalid character inside the map\n");
-			free(data->map_int);
-			exit(0); //changer
+			ft_free_all("Invalid character inside the map\n", data);
 		}
 		i++;
 	}

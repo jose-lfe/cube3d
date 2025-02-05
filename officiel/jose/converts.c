@@ -1,4 +1,16 @@
-#include "../kiki/cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   converts.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kdroz <kdroz@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/05 15:14:57 by kdroz             #+#    #+#             */
+/*   Updated: 2025/02/05 15:14:57 by kdroz            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
 
 void	convert_map_int_to_char(t_data *data)
 {
@@ -9,22 +21,17 @@ void	convert_map_int_to_char(t_data *data)
 	x = 0;
 	data->map = malloc((data->map_y + 1) * sizeof(char *));
 	if (data->map == NULL)
-		exit(0); // changer
+		ft_free_all("Malloc Error\n", data);
 	while (i < data->map_y)
 	{
 		x = ft_fill_map_char(data, i, x);
 		if (x == 0)
 		{
-			ft_free_str_map(data->map);
-			exit(0); //changer
+			ft_free_all("invalid map\n", data);
 		}
 		i++;
 	}
 	data->map[i] = NULL;
-	i = 0;
-	printf("new map\n");
-	while (data->map[i])
-		printf("%s\n", data->map[i++]);
 	free(data->map_int);
 	data->map_int = NULL;
 }

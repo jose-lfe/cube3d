@@ -1,4 +1,16 @@
-#include "../kiki/cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kdroz <kdroz@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/05 15:15:35 by kdroz             #+#    #+#             */
+/*   Updated: 2025/02/05 15:15:48 by kdroz            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
 
 int	find_map_x(char **str, int i)
 {
@@ -23,13 +35,13 @@ void	ft_get_player_data(char c, int y, int x, t_data *data)
 	data->player_y = (float)y;
 	data->player_x = (float)x;
 	if (c == 'N')
-		data->player_angle = 1.0;
+		data->player_angle = (3 * PI) / 2;
 	else if (c == 'W')
-		data->player_angle = 0.75;
+		data->player_angle = PI;
 	else if (c == 'S')
-		data->player_angle = 0.5;
+		data->player_angle = PI / 2;
 	else
-		data->player_angle = 0.25;
+		data->player_angle = 0.0;
 	data->map[y][x] = '0';
 }
 

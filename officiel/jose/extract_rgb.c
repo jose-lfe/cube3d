@@ -1,24 +1,32 @@
-#include "../kiki/cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extract_rgb.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kdroz <kdroz@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/05 15:15:16 by kdroz             #+#    #+#             */
+/*   Updated: 2025/02/05 15:15:25 by kdroz            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// Fonction pour extraire la prochaine valeur et avancer dans la chaîne
+#include "cub3d.h"
+
 int	extract_next_value(char **str)
 {
 	int	value;
 
 	if (!str || !(*str) || !(**str))
 		return (-1);
-	value = ft_atoi(*str); // Convertit la chaîne actuelle en entier
-/*Avance jusqu'à la prochaine virgule ou la fin de la chaîne*/
+	value = ft_atoi(*str);
 	while (**str && **str != ',')
 	{
 		(*str)++;
 	}
-// Si une virgule est trouvée, passe au caractère suivant
 	if (**str == ',')
 	{
 		(*str)++;
 	}
-	printf("%i\n", value); //
 	return (value);
 }
 

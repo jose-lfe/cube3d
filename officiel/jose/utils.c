@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kdroz <kdroz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 03:48:10 by jose-lfe          #+#    #+#             */
-/*   Updated: 2025/01/28 16:22:51 by jose-lfe         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:42:43 by kdroz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../kiki/cub3d.h"
+#include "cub3d.h"
 
 t_data	init_data(void)
 {

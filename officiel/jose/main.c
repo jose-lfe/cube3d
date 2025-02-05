@@ -3,91 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jose-lfe <jose-lfe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kdroz <kdroz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 22:15:49 by jose-lfe          #+#    #+#             */
-/*   Updated: 2025/01/28 16:36:11 by jose-lfe         ###   ########.fr       */
+/*   Created: 2025/01/31 12:19:54 by kdroz             #+#    #+#             */
+/*   Updated: 2025/02/05 15:13:00 by kdroz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../kiki/cub3d.h"
+#include "cub3d.h"
 
-void	ft_init_mlx(t_data *data)
+void	init_game(t_game *g, t_data *data)
 {
-	printf("all clear\n");
-	ft_free_all(NULL, data);
+	init_player(&g->player, data);
+	g->map = data->map;
+	g->mlx = mlx_init();
+	g->win = mlx_new_window(g->mlx, WIDTH, HEIGHT, "Game");
+	g->img = mlx_new_image(g->mlx, WIDTH, HEIGHT);
+	g->data = mlx_get_data_addr(g->img, &g->bpp, &g->size_line, &g->endian);
+	g->no_tex.img = NULL;
+	g->so_tex.img = NULL;
+	g->ea_tex.img = NULL;
+	g->we_tex.img = NULL;
+	load_texture(g, &g->no_tex, data->no);
+	load_texture(g, &g->so_tex, data->so);
+	load_texture(g, &g->we_tex, data->we);
+	load_texture(g, &g->ea_tex, data->ea);
+	if (g->no_tex.img == NULL)
+		ft_free_all_game(g, "failed to load north texture\n");
+	if (g->so_tex.img == NULL)
+		ft_free_all_game(g, "failed to load south texture\n");
+	if (g->we_tex.img == NULL)
+		ft_free_all_game(g, "failed to load west texture\n");
+	if (g->ea_tex.img == NULL)
+		ft_free_all_game(g, "failed to load east texture\n");
+	g->f_rgb = data->f_rgb;
+	g->c_rgb = data->c_rgb;
+	mlx_put_image_to_window(g->mlx, g->win, g->img, 0, 0);
 }
 
-void	ft_print_map(char **str, t_data *data)
+void	init_player(t_player *player, t_data *data)
 {
-	int		i;
-	int		d;
-
-	i = 0;
-	while (str[i])
-	{
-		ft_printf("%s\n", str[i]);
-		i++;
-	}
-	i = get_texture(str, data);
-	convert_map(str, i, data);
-	ft_printf("mapx = %i\n", data->map_x);
-	ft_printf("mapy = %i\n", data->map_y);
-	ft_printf("maps = %i\n", data->map_s);
-	d = 0;
-	while (d < data->map_s)
-	{
-		if (d % data->map_x == 0)
-			ft_printf("\n");
-		ft_printf("%i", data->map_int[d]);
-		d++;
-	}
-	ft_free_str_map(str);
-	check_bad_char(data);
-	check_for_player(data->map_int, data->map_s, data);
-	convert_map_int_to_char(data);
+	player->x = data->player_x * BLOCK + BLOCK / 2;
+	player->y = data->player_y * BLOCK + BLOCK / 2;
+	player->new_x = player->x;
+	player->new_y = player->y;
+	player->angle = data->player_angle;
+	player->speed = 4.0;
+	player->angle_speed = 0.015;
+	player->key_left = false;
+	player->key_right = false;
+	player->key_up = false;
+	player->key_down = false;
+	player->left_rotate = false;
+	player->right_rotate = false;
 }
 
-void	ft_get_map(int fd, char *test, t_data *data)
+int	close_win(void *param)
 {
-	char	*tmp;
-	char	*str;
-	char	**map;
-	char	*newstr;
+	t_game	*game;
 
-	str = test;
-	tmp = get_next_line(fd);
-	while (tmp != NULL)
-	{
-		newstr = ft_strjoin(str, tmp);
-		free(str);
-		str = newstr;
-		free(tmp);
-		tmp = get_next_line(fd);
-	}
-	map = ft_split(str, '\n');
-	free(str);
-	ft_print_map(map, data);
-	close(fd);
-	ft_init_mlx(data);
-}
-
-void	check_file_name(char *str)
-{
-	int	len;
-
-	len = ft_strlen(str);
-	if (len <= 4 || ft_strncmp(str + len - 4, ".cub", 4) != 0)
-	{
-		ft_printf("file must be in format : *.cub\n");
-		exit (0);
-	}
+	game = (t_game *)param;
+	ft_free_all_game(game, NULL);
+	return (0);
 }
 
 int	main(int ac, char **av)
 {
 	int		fd;
 	char	*tmp;
+	t_game	game;
 	t_data	data;
 
 	fd = 0;
@@ -102,5 +86,11 @@ int	main(int ac, char **av)
 	if (!tmp)
 		ft_print_error("empty map");
 	ft_get_map(fd, tmp, &data);
+	init_game(&game, &data);
+	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
+	mlx_hook(game.win, 3, 1L << 1, key_release, &game.player);
+	mlx_hook(game.win, 17, 0, close_win, &game);
+	mlx_loop_hook(game.mlx, draw_loop, &game);
+	mlx_loop(game.mlx);
 	return (0);
 }
